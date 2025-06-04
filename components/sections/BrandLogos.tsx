@@ -2,7 +2,7 @@ export default function BrandLogos() {
   return (
     <section className="py-6 sm:py-8 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 lg:gap-12 opacity-60">
+        <div className="flex flex-wrap justify-center gap-4 sm:gap-8 lg:gap-12">
           <span className="text-lg sm:text-xl lg:text-2xl font-bold">
             Disney
           </span>

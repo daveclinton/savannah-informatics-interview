@@ -7,6 +7,8 @@ import ThemeCookieSync from "@/components/ThemeCookieSync";
 import { TanstackQueryProvider } from "./tanstack-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import Header from "@/components/layout/Header";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
