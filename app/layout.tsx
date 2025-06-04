@@ -78,7 +78,7 @@ export default async function RootLayout({
         <TanstackQueryProvider>
           <ThemeProvider
             attribute="class"
-            defaultTheme={theme}
+            defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
           >
