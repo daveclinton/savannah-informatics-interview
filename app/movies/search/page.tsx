@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import type React from "react";
@@ -13,19 +14,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 
 import Image from "next/image";
 import {
   searchParamsParsers,
   searchParamsUrlKeys,
 } from "@/definitions/helpers/search";
-import {
-  getMediaTypeColor,
-  getMediaTypeIcon,
-  getMediaTypeLabel,
-} from "@/definitions/helpers/mediaType";
+import { getMediaTypeLabel } from "@/definitions/helpers/mediaType";
 import {
   Pagination,
   PaginationContent,
@@ -221,126 +217,112 @@ export default function SearchPage() {
 
       {data && data.results.length > 0 && (
         <>
-          <div className="mb-4">
-            <p className="text-sm text-muted-foreground">
-              Found {data.pagination.total_results.toLocaleString()} results
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-            {data.results.map((result) => (
-              <Card
-                key={`${result.media_type}-${result.id}`}
-                className="overflow-hidden hover:shadow-lg transition-shadow"
-              >
-                <div className="relative aspect-[2/3] bg-muted">
-                  <Image
-                    src={`https://image.tmdb.org/t/p/w300/${
-                      result.poster_path || result.profile_path
-                    }`}
-                    alt={result.title || result.name || "Media poster"}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  />
-                </div>
-                <CardContent className="p-4">
-                  <Badge
-                    className={`mb-2 ${getMediaTypeColor(result.media_type)}`}
-                  >
-                    <span className="flex items-center gap-1">
-                      {getMediaTypeIcon(result.media_type)}
-                      {getMediaTypeLabel(result.media_type)}
-                    </span>
-                  </Badge>
-                  <h3 className="font-semibold text-base md:text-lg line-clamp-2 mb-2">
-                    {result.title || result.name || result.original_name}
-                  </h3>
-                  {result.release_date && (
-                    <p className="text-xs md:text-sm text-muted-foreground mb-2">
-                      Released: {new Date(result.release_date).getFullYear()}
-                    </p>
-                  )}
-                  {result.first_air_date && (
-                    <p className="text-xs md:text-sm text-muted-foreground mb-2">
-                      First Aired:{" "}
-                      {new Date(result.first_air_date).getFullYear()}
-                    </p>
-                  )}
-                  {result.overview && (
-                    <p className="text-xs md:text-sm text-muted-foreground line-clamp-2 md:line-clamp-3">
-                      {result.overview}
-                    </p>
-                  )}
-                </CardContent>
-                <CardFooter className="p-4 pt-0">
-                  {result.vote_average && result.vote_average > 0 && (
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="font-medium text-xs md:text-sm">
-                          {Math.round(result.vote_average * 10)}%
-                        </span>
-                      </div>
-                      <span className="text-xs text-muted-foreground">
-                        User Score
-                      </span>
-                    </div>
-                  )}
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-
-          {data.pagination.total_pages > 1 && (
-            <div className="flex flex-col items-center gap-4 py-6">
-              <Pagination>
-                <PaginationContent>
-                  <PaginationItem>
-                    <PaginationPrevious
-                      onClick={() => handlePageChange(page - 1)}
-                      className={
-                        page === 1
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
-                      }
-                    />
-                  </PaginationItem>
-
-                  {generatePaginationItems().map((item, index) => (
-                    <PaginationItem key={index}>
-                      {typeof item === "number" ? (
-                        <PaginationLink
-                          onClick={() => handlePageChange(item)}
-                          isActive={item === page}
-                          className="cursor-pointer"
-                        >
-                          {item}
-                        </PaginationLink>
-                      ) : (
-                        <PaginationEllipsis />
-                      )}
-                    </PaginationItem>
-                  ))}
-
-                  <PaginationItem>
-                    <PaginationNext
-                      onClick={() => handlePageChange(page + 1)}
-                      className={
-                        page === data.pagination.total_pages
-                          ? "pointer-events-none opacity-50"
-                          : "cursor-pointer"
-                      }
-                    />
-                  </PaginationItem>
-                </PaginationContent>
-              </Pagination>
-
-              <div className="text-sm text-muted-foreground">
-                Page {page} of {data.pagination.total_pages} •{" "}
-                {data.pagination.total_results.toLocaleString()} results
-              </div>
+          <div className="flex justify-between">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold">Search Results</h2>
+              <p className="text-sm text-muted-foreground">
+                {data.pagination.total_results.toLocaleString()} results for
+                &quot;
+                {searchQuery}&quot;
+              </p>
             </div>
-          )}
+            {data.pagination.total_pages > 1 && (
+              <div className="flex flex-col items-center gap-4 py-6">
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        onClick={() => handlePageChange(page - 1)}
+                        className={
+                          page === 1
+                            ? "pointer-events-none opacity-50"
+                            : "cursor-pointer"
+                        }
+                      />
+                    </PaginationItem>
+
+                    {generatePaginationItems().map((item, index) => (
+                      <PaginationItem key={index}>
+                        {typeof item === "number" ? (
+                          <PaginationLink
+                            onClick={() => handlePageChange(item)}
+                            isActive={item === page}
+                            className="cursor-pointer"
+                          >
+                            {item}
+                          </PaginationLink>
+                        ) : (
+                          <PaginationEllipsis />
+                        )}
+                      </PaginationItem>
+                    ))}
+
+                    <PaginationItem>
+                      <PaginationNext
+                        onClick={() => handlePageChange(page + 1)}
+                        className={
+                          page === data.pagination.total_pages
+                            ? "pointer-events-none opacity-50"
+                            : "cursor-pointer"
+                        }
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+
+                <div className="text-sm text-muted-foreground">
+                  Page {page} of {data.pagination.total_pages} •{" "}
+                  {data.pagination.total_results.toLocaleString()} results
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {data.results
+              .reduce<[any[], any[]]>(
+                (acc, result, index) => {
+                  acc[index % 2].push(result);
+                  return acc;
+                },
+                [[], []]
+              )
+              .map((column, colIndex) => (
+                <div key={colIndex} className="space-y-4">
+                  {column.map((result) => (
+                    <div
+                      key={`${result.media_type}-${result.id}`}
+                      className="flex items-start gap-4 p-2 hover:bg-muted/50 transition-colors rounded-lg cursor-pointer"
+                    >
+                      <div className="relative w-16 h-16 flex-shrink-0">
+                        <Image
+                          src={`https://image.tmdb.org/t/p/w200/${
+                            result.poster_path || result.profile_path
+                          }`}
+                          alt={result.title || result.name || "Media poster"}
+                          fill
+                          className="object-cover rounded"
+                          sizes="64px"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-base leading-tight">
+                          {result.title || result.name || result.original_name}
+                        </h3>
+                        <p className="text-sm text-muted-foreground">
+                          {getMediaTypeLabel(result.media_type)} -{" "}
+                          {result.release_date
+                            ? new Date(result.release_date).getFullYear()
+                            : result.first_air_date
+                            ? new Date(result.first_air_date).getFullYear()
+                            : "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+          </div>
         </>
       )}
     </div>
