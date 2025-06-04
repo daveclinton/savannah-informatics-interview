@@ -2,21 +2,8 @@
 
 import type React from "react";
 import { useSearch } from "@/hooks/useSearch";
-import {
-  useQueryStates,
-  parseAsString,
-  parseAsInteger,
-  parseAsStringEnum,
-} from "nuqs";
-import {
-  Search,
-  Film,
-  Tv,
-  User,
-  Loader2,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { useQueryStates } from "nuqs";
+import { Search, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,28 +16,15 @@ import {
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-
-const searchParamsParsers = {
-  searchQuery: parseAsString.withDefault(""),
-  mediaType: parseAsStringEnum<"multi" | "movie" | "tv" | "person">([
-    "multi",
-    "movie",
-    "tv",
-    "person",
-  ]).withDefault("multi"),
-  page: parseAsInteger.withDefault(1),
-  sortBy: parseAsStringEnum<"popularity.desc" | "release_date.desc">([
-    "popularity.desc",
-    "release_date.desc",
-  ]).withDefault("popularity.desc"),
-};
-
-const searchParamsUrlKeys = {
-  searchQuery: "q",
-  mediaType: "t",
-  page: "p",
-  sortBy: "s",
-};
+import {
+  searchParamsParsers,
+  searchParamsUrlKeys,
+} from "@/definitions/helpers/search";
+import {
+  getMediaTypeColor,
+  getMediaTypeIcon,
+  getMediaTypeLabel,
+} from "@/definitions/helpers/mediaType";
 
 export default function SearchPage() {
   const [params, setParams] = useQueryStates(searchParamsParsers, {
@@ -76,45 +50,6 @@ export default function SearchPage() {
     if (newPage > 0 && newPage <= (data?.pagination.total_pages || 1)) {
       setParams({ page: newPage });
       window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
-
-  const getMediaTypeIcon = (mediaType: string) => {
-    switch (mediaType) {
-      case "movie":
-        return <Film className="h-4 w-4" />;
-      case "tv":
-        return <Tv className="h-4 w-4" />;
-      case "person":
-        return <User className="h-4 w-4" />;
-      default:
-        return <Film className="h-4 w-4" />;
-    }
-  };
-
-  const getMediaTypeColor = (mediaType: string) => {
-    switch (mediaType) {
-      case "movie":
-        return "bg-primary text-primary-foreground";
-      case "tv":
-        return "bg-secondary text-secondary-foreground";
-      case "person":
-        return "bg-accent text-accent-foreground";
-      default:
-        return "bg-muted text-muted-foreground";
-    }
-  };
-
-  const getMediaTypeLabel = (mediaType: string) => {
-    switch (mediaType) {
-      case "movie":
-        return "Movie";
-      case "tv":
-        return "TV Show";
-      case "person":
-        return "Person";
-      default:
-        return "Unknown";
     }
   };
 
