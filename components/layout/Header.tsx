@@ -24,12 +24,6 @@ const Header = () => {
             >
               Discover
             </Link>
-            <Link
-              href="#"
-              className="text-base font-medium text-foreground hover:text-netflix-red aria-current-page:underline aria-current-page:text-netflix-red transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:ring-ring"
-            >
-              Movie Release
-            </Link>
           </nav>
         </div>
         <div className="flex items-center space-x-2 sm:space-x-4">
@@ -42,9 +36,6 @@ const Header = () => {
               <Search className="w-5 h-5 cursor-pointer" />
               <span className="sr-only">Search</span>
             </Link>
-          </Button>
-          <Button variant="outline" className="px-4 cursor-pointer">
-            <Link href="/auth/signup-up">Signup</Link>
           </Button>
           <Button
             variant="secondary"
