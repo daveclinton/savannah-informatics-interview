@@ -13,6 +13,8 @@ export interface Movie {
   original_title: string;
   popularity: number;
   video: boolean;
+  runtime: number | null;
+  genres: { id: number; name: string }[];
 }
 
 export interface TMDBResponse<T> {
@@ -36,6 +38,9 @@ export interface TVShow {
   original_language: string;
   original_name: string;
   popularity: number;
+  number_of_seasons: number;
+  number_of_episodes: number;
+  genres: { id: number; name: string }[];
 }
 
 export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
