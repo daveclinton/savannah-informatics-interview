@@ -2,7 +2,12 @@
 
 import type React from "react";
 import { useSearch } from "@/hooks/useSearch";
-import { useState } from "react";
+import {
+  useQueryStates,
+  parseAsString,
+  parseAsInteger,
+  parseAsStringEnum,
+} from "nuqs";
 import {
   Search,
   Film,
@@ -26,22 +31,53 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { TMDB_IMAGE_BASE_URL } from "@/definitions/tmdb";
 
-export default function SearchPage() {
-  const [query, setQuery] = useState("");
-  const [type, setType] = useState("multi");
-  const [page, setPage] = useState(1);
-  const [sortBy, setSortBy] = useState<string | undefined>("popularity.desc");
+// Define parsers for query parameters
+const searchParamsParsers = {
+  searchQuery: parseAsString.withDefault(""),
+  mediaType: parseAsStringEnum<"multi" | "movie" | "tv" | "person">([
+    "multi",
+    "movie",
+    "tv",
+    "person",
+  ]).withDefault("multi"),
+  page: parseAsInteger.withDefault(1),
+  sortBy: parseAsStringEnum<"popularity.desc" | "release_date.desc">([
+    "popularity.desc",
+    "release_date.desc",
+  ]).withDefault("popularity.desc"),
+};
 
-  const { data, isLoading, error } = useSearch(query, type, page, sortBy);
+// Define URL keys for shorter query parameters
+const searchParamsUrlKeys = {
+  searchQuery: "q",
+  mediaType: "t",
+  page: "p",
+  sortBy: "s",
+};
+
+export default function SearchPage() {
+  const [params, setParams] = useQueryStates(searchParamsParsers, {
+    urlKeys: searchParamsUrlKeys,
+    history: "push",
+  });
+
+  const { searchQuery, mediaType, page, sortBy } = params;
+
+  const { data, isLoading, error } = useSearch(
+    searchQuery,
+    mediaType,
+    page,
+    sortBy
+  );
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (query) setPage(1);
+    if (searchQuery) setParams({ page: 1 }); // Reset page to 1 on new search
   };
 
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= (data?.pagination.total_pages || 1)) {
-      setPage(newPage);
+      setParams({ page: newPage });
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -109,8 +145,8 @@ export default function SearchPage() {
                 <Input
                   id="search-query"
                   type="text"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  value={searchQuery}
+                  onChange={(e) => setParams({ searchQuery: e.target.value })}
                   placeholder="Enter movie, TV show, or person name"
                   className="pl-10"
                 />
@@ -121,7 +157,14 @@ export default function SearchPage() {
               <label htmlFor="media-type" className="text-sm font-medium">
                 Media Type
               </label>
-              <Select value={type} onValueChange={setType}>
+              <Select
+                value={mediaType}
+                onValueChange={(value) =>
+                  setParams({
+                    mediaType: value as "multi" | "movie" | "tv" | "person",
+                  })
+                }
+              >
                 <SelectTrigger id="media-type">
                   <SelectValue placeholder="Type" />
                 </SelectTrigger>
@@ -139,8 +182,12 @@ export default function SearchPage() {
                 Sort By
               </label>
               <Select
-                value={sortBy || "popularity.desc"}
-                onValueChange={(value) => setSortBy(value || "popularity.desc")}
+                value={sortBy}
+                onValueChange={(value) =>
+                  setParams({
+                    sortBy: value as "popularity.desc" | "release_date.desc",
+                  })
+                }
               >
                 <SelectTrigger id="sort-by">
                   <SelectValue placeholder="Sort By" />
@@ -218,7 +265,7 @@ export default function SearchPage() {
                         ? `${TMDB_IMAGE_BASE_URL}/w500${
                             result.poster_path || result.profile_path
                           }`
-                        : "/placeholder.svg?height=450&width=300"
+                        : "https://placehold.co/450x350"
                     }
                     alt={result.title || result.name || "Media poster"}
                     fill
