@@ -31,6 +31,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import Link from "next/link";
 
 export default function SearchPage() {
   const [params, setParams] = useQueryStates(searchParamsParsers, {
@@ -271,48 +272,52 @@ export default function SearchPage() {
               .map((column, colIndex) => (
                 <div key={colIndex} className="space-y-4">
                   {column.map((result) => (
-                    <Card
+                    <Link
                       key={`${result.media_type}-${result.id}`}
-                      className="hover:shadow-md transition-all duration-200 cursor-pointer group"
+                      href={`/movies/${result.media_type}/${result.id}`}
                     >
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-4">
-                          <div className="relative w-16 h-20 flex-shrink-0">
-                            <Image
-                              src={`https://image.tmdb.org/t/p/w200/${
-                                result.poster_path || result.profile_path
-                              }`}
-                              alt={
-                                result.title || result.name || "Media poster"
-                              }
-                              fill
-                              className="object-cover rounded-md"
-                              sizes="64px"
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-base leading-tight group-hover:text-primary transition-colors">
-                              {result.title ||
-                                result.name ||
-                                result.original_name}
-                            </h3>
-                            <p className="text-sm text-muted-foreground mt-1">
-                              {getMediaTypeLabel(result.media_type)} •{" "}
-                              {result.release_date
-                                ? new Date(result.release_date).getFullYear()
-                                : result.first_air_date
-                                ? new Date(result.first_air_date).getFullYear()
-                                : "N/A"}
-                            </p>
-                            {result.overview && (
-                              <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
-                                {result.overview}
+                      <Card className="hover:shadow-md transition-all duration-200 cursor-pointer group">
+                        <CardContent className="p-4">
+                          <div className="flex items-start gap-4">
+                            <div className="relative w-16 h-20 flex-shrink-0">
+                              <Image
+                                src={`https://image.tmdb.org/t/p/w200/${
+                                  result.poster_path || result.profile_path
+                                }`}
+                                alt={
+                                  result.title || result.name || "Media poster"
+                                }
+                                fill
+                                className="object-cover rounded-md"
+                                sizes="64px"
+                              />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-semibold text-base leading-tight group-hover:text-primary transition-colors">
+                                {result.title ||
+                                  result.name ||
+                                  result.original_name}
+                              </h3>
+                              <p className="text-sm text-muted-foreground mt-1">
+                                {getMediaTypeLabel(result.media_type)} •{" "}
+                                {result.release_date
+                                  ? new Date(result.release_date).getFullYear()
+                                  : result.first_air_date
+                                  ? new Date(
+                                      result.first_air_date
+                                    ).getFullYear()
+                                  : "N/A"}
                               </p>
-                            )}
+                              {result.overview && (
+                                <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+                                  {result.overview}
+                                </p>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                        </CardContent>
+                      </Card>
+                    </Link>
                   ))}
                 </div>
               ))}

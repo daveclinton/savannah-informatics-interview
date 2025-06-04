@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import Slider from "react-slick";
 import { useRef } from "react";
+import { redirect } from "next/navigation";
 
 const sliderSettings = {
   dots: true,
@@ -117,12 +118,20 @@ export default function HeroSection() {
                     {movie.overview || "No overview available"}
                   </p>
                   <div className="flex flex-wrap gap-4">
-                    <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base gap-2">
+                    <Button
+                      onClick={() => {
+                        redirect(`/movies/movie/${movie.id}`);
+                      }}
+                      className="bg-green-500 hover:bg-green-400 cursor-pointer text-primary rounded-lg px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base gap-2"
+                    >
                       <Play className="w-4 h-4 fill-current" />
-                      Watch Trailer
+                      View Details
                     </Button>
                     <Button
                       variant="outline"
+                      onClick={() => {
+                        redirect(`/movies/movie/${movie.id}`);
+                      }}
                       className="border-border text-foreground bg-transparent rounded-lg px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base gap-2"
                     >
                       <Bookmark className="w-4 h-4" />
