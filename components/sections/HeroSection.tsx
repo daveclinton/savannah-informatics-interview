@@ -107,7 +107,7 @@ export default function HeroSection() {
               fill
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent">
+            <div className="absolute inset-0 bg-gradient-to-r from-background/20 via-background/40 to-transparent">
               <div className="flex items-center h-full px-4 sm:px-6 max-w-7xl mx-auto pt-[64px] sm:pt-[72px]">
                 <div className="max-w-lg">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">

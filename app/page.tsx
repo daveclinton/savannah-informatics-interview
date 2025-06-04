@@ -1,5 +1,3 @@
-import Footer from "@/components/layout/Footer";
-import BottomSections from "@/components/sections/BottomSections";
 import BrandLogos from "@/components/sections/BrandLogos";
 import FeaturedSection from "@/components/sections/FeaturedSection";
 import HeroSection from "@/components/sections/HeroSection";
@@ -20,9 +18,7 @@ export default function HomePage() {
         <MovieSection title="Movies" type="popular" />
         <SeriesSection title="Series" type="popular" limit={6} />
         <KoreanSeriesSection />
-        <BottomSections />
       </div>
-      <Footer />
     </div>
   );
 }
