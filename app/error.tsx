@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { MonitorCogIcon } from "lucide-react";
 
 const NotFound = () => {
