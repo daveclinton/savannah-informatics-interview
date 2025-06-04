@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { SearchResponse } from "@/definitions/tmdb";
+import type { SearchResponse } from "@/definitions/tmdb";
 
 const axiosInstance = axios.create({
   baseURL: "/api",
@@ -23,8 +23,8 @@ const fetchSearchResults = async (
 
 export const useSearch = (
   query: string,
-  type: string = "multi",
-  page: number = 1,
+  type = "multi",
+  page = 1,
   sortBy?: string
 ) => {
   return useQuery<SearchResponse, Error>({
