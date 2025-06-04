@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Search, Play, Plus, Star, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,54 +9,64 @@ import { ModeToggle } from "@/components/mode-toggle";
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header - Sticky and positioned over hero */}
-      <header className="sticky top-0 z-50 w-full">
-        <div className="bg-background/20 backdrop-blur-sm">
-          <div className="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
-            <div className="flex items-center space-x-8">
-              <div className="flex items-center space-x-2">
-                <span className="text-xl font-bold">daveclintonn</span>
-              </div>
-              <nav className="hidden md:flex space-x-6">
-                <a
-                  href="#"
-                  className="text-foreground hover:text-muted-foreground"
-                >
-                  Home
-                </a>
-                <a href="#" className="text-muted hover:text-foreground">
-                  Discover
-                </a>
-                <a href="#" className="text-muted hover:text-foreground">
-                  Movie Release
-                </a>
-                <a href="#" className="text-muted hover:text-foreground">
-                  Forum
-                </a>
-                <a href="#" className="text-muted hover:text-foreground">
-                  About
-                </a>
-              </nav>
+      {/* Header - Sticky and responsive */}
+      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm">
+        <div className="flex items-center justify-between px-4 py-4 sm:px-6 max-w-7xl mx-auto">
+          <div className="flex items-center space-x-4 sm:space-x-8">
+            <div className="flex items-center space-x-2">
+              <span className="text-lg sm:text-xl font-bold">daveclintonn</span>
             </div>
-            <div className="flex items-center space-x-4">
-              <Search className="w-5 h-5 text-foreground" />
-              <Button
-                variant="outline"
-                className="border border-border cursor-pointer text-foreground bg-transparent rounded-xl px-8 py-3 text-base"
+            <nav className="hidden md:flex space-x-4 lg:space-x-6">
+              <a
+                href="#"
+                className="text-sm lg:text-base text-foreground hover:text-muted-foreground"
               >
-                Sign up
-              </Button>
-              <Button className="bg-primary cursor-pointer hover:bg-primary/90 text-primary-foreground rounded-xl px-8 py-3 text-base">
-                Login
-              </Button>
-              <ModeToggle />
-            </div>
+                Home
+              </a>
+              <a
+                href="#"
+                className="text-sm lg:text-base text-muted hover:text-foreground"
+              >
+                Discover
+              </a>
+              <a
+                href="#"
+                className="text-sm lg:text-base text-muted hover:text-foreground"
+              >
+                Movie Release
+              </a>
+              <a
+                href="#"
+                className="text-sm lg:text-base text-muted hover:text-foreground"
+              >
+                Forum
+              </a>
+              <a
+                href="#"
+                className="text-sm lg:text-base text-muted hover:text-foreground"
+              >
+                About
+              </a>
+            </nav>
+          </div>
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            <Search className="w-5 h-5 text-foreground" />
+            <Button
+              variant="outline"
+              className="border border-border text-foreground bg-transparent rounded-xl px-4 sm:px-6 py-2 text-sm sm:text-base"
+            >
+              Sign up
+            </Button>
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-4 sm:px-6 py-2 text-sm sm:text-base">
+              Login
+            </Button>
+            <ModeToggle />
           </div>
         </div>
       </header>
 
-      {/* Hero Section - Starting from the top of the page */}
-      <section className="relative h-[700px] -mt-[72px] overflow-hidden">
+      {/* Hero Section - Responsive height and typography */}
+      <section className="relative h-[500px] sm:h-[600px] md:h-[700px] -mt-[64px] sm:-mt-[72px] overflow-hidden">
         <Image
           src="https://picsum.photos/1920/800?random=1"
           alt="Star Wars: The Force Awakens"
@@ -62,25 +74,25 @@ export default function HomePage() {
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent">
-          <div className="flex items-center h-full px-6 max-w-7xl mx-auto pt-[72px]">
+          <div className="flex items-center h-full px-4 sm:px-6 max-w-7xl mx-auto pt-[64px] sm:pt-[72px]">
             <div className="max-w-lg">
-              <h1 className="text-5xl font-bold mb-4">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
                 Star Wars: The Force Awakens
               </h1>
-              <p className="text-muted-foreground mb-6 leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground mb-6 leading-relaxed">
                 The First Order has risen from the ashes of the Empire and will
                 not rest until Skywalker, the last of the Jedi, has been
                 destroyed. With the support of the Republic, General Leia Organa
                 leads a brave Resistance.
               </p>
-              <div className="flex space-x-4">
-                <Button className="bg-primary cursor-pointer hover:bg-primary/90 text-primary-foreground rounded-lg px-6 py-3 text-base gap-2">
+              <div className="flex flex-wrap gap-4">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base gap-2">
                   <Play className="w-4 h-4 fill-current" />
                   Watch Trailer
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-border text-foreground cursor-pointer bg-transparent rounded-lg px-6 py-3 text-base gap-2"
+                  className="border-border text-foreground bg-transparent rounded-lg px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base gap-2"
                 >
                   <Bookmark className="w-4 h-4" />
                   Add Watchlist
@@ -91,28 +103,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Brand Logos */}
-      <section className="py-8 px-6">
+      {/* Brand Logos - Responsive layout */}
+      <section className="py-6 sm:py-8 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-center space-x-12 opacity-60">
-            <span className="text-2xl font-bold">Disney</span>
-            <span className="text-2xl font-bold text-[#E50914]">NETFLIX</span>
-            <span className="text-2xl font-bold text-[#A100C4]">HBO MAX</span>
-            <span className="text-2xl font-bold">PIXAR</span>
-            <span className="text-2xl font-bold text-[#E50914]">MARVEL</span>
-            <span className="text-2xl font-bold">STAR WARS</span>
-            <span className="text-2xl font-bold text-[#FFC107]">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-8 lg:gap-12 opacity-60">
+            <span className="text-lg sm:text-xl lg:text-2xl font-bold">
+              Disney
+            </span>
+            <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#E50914]">
+              NETFLIX
+            </span>
+            <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#A100C4]">
+              HBO MAX
+            </span>
+            <span className="text-lg sm:text-xl lg:text-2xl font-bold">
+              PIXAR
+            </span>
+            <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#E50914]">
+              MARVEL
+            </span>
+            <span className="text-lg sm:text-xl lg:text-2xl font-bold">
+              STAR WARS
+            </span>
+            <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#FFC107]">
               National Geographic
             </span>
           </div>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-6 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
         {/* Just Release */}
         <section>
-          <h2 className="text-2xl font-bold mb-6">Just Release</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">Just Release</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <Card
                 key={i}
@@ -140,10 +164,12 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Popular of the week */}
+        {/* Popular of the Week */}
         <section>
-          <h2 className="text-2xl font-bold mb-6">Popular of the week</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">
+            Popular of the Week
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[
               "The Last of Us",
               "Red Notice",
@@ -154,7 +180,9 @@ export default function HomePage() {
                 key={i}
                 className="flex items-center space-x-4 bg-card/50 rounded-lg p-4"
               >
-                <span className="text-4xl font-bold text-muted">{i + 1}</span>
+                <span className="text-2xl sm:text-3xl lg:text-4xl font-bold text-muted">
+                  {i + 1}
+                </span>
                 <Image
                   src={`https://picsum.photos/80/120?random=${i + 20}`}
                   alt={title}
@@ -163,7 +191,9 @@ export default function HomePage() {
                   className="rounded aspect-[2/3] object-cover"
                 />
                 <div>
-                  <h3 className="font-semibold">{title}</h3>
+                  <h3 className="font-semibold text-sm sm:text-base">
+                    {title}
+                  </h3>
                   <div className="flex items-center space-x-1 mt-1">
                     <Star className="w-4 h-4 fill-chart-1 text-chart-1" />
                     <span className="text-sm">8.{i + 5}</span>
@@ -176,11 +206,13 @@ export default function HomePage() {
 
         {/* Featured in SaintStream */}
         <section>
-          <h2 className="text-2xl font-bold mb-2">Featured in SaintStream</h2>
-          <p className="text-muted-foreground mb-6">
+          <h2 className="text-xl sm:text-2xl font-bold mb-2">
+            Featured in SaintStream
+          </h2>
+          <p className="text-sm sm:text-base text-muted-foreground mb-6">
             Best featured for you today
           </p>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             <div>
               <div className="relative mb-4">
                 <Image
@@ -188,25 +220,25 @@ export default function HomePage() {
                   alt="Air: Courting A Legend"
                   width={600}
                   height={300}
-                  className="w-full rounded-lg object-cover"
+                  className="w-full rounded-lg object-cover aspect-[2/1]"
                 />
               </div>
-              <h3 className="text-2xl font-bold mb-2">
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2">
                 Air: Courting A Legend
               </h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-sm sm:text-base text-muted-foreground mb-4">
                 Sonny Vaccaro and Nike pursue basketball rookie Michael Jordan,
                 creating a partnership that revolutionizes the world of sports
                 and contemporary culture.
               </p>
-              <div className="flex space-x-4">
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              <div className="flex flex-wrap gap-4">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base">
                   <Play className="w-4 h-4 mr-2" />
                   Play Now
                 </Button>
                 <Button
                   variant="outline"
-                  className="border-border text-foreground"
+                  className="border-border text-foreground rounded-lg px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Watchlist
@@ -219,7 +251,7 @@ export default function HomePage() {
                 alt="The Last of Us"
                 width={400}
                 height={600}
-                className="w-full rounded-lg object-cover"
+                className="w-full rounded-lg object-cover aspect-[2/3]"
               />
             </div>
           </div>
@@ -227,8 +259,8 @@ export default function HomePage() {
 
         {/* Movies */}
         <section>
-          <h2 className="text-2xl font-bold mb-6">Movies</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">Movies</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {[
               "Antman & The Wasp Quantumania",
               "Air: Courting A Legend",
@@ -256,8 +288,10 @@ export default function HomePage() {
                       </div>
                     </div>
                   </div>
-                  <div className="p-3">
-                    <h3 className="font-semibold text-sm">{title}</h3>
+                  <div className="p-2 sm:p-3">
+                    <h3 className="font-semibold text-xs sm:text-sm">
+                      {title}
+                    </h3>
                   </div>
                 </CardContent>
               </Card>
@@ -267,8 +301,8 @@ export default function HomePage() {
 
         {/* Series */}
         <section>
-          <h2 className="text-2xl font-bold mb-6">Series</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">Series</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {[
               "Wednesday Season 1",
               "Beef Series",
@@ -296,8 +330,10 @@ export default function HomePage() {
                       </div>
                     </div>
                   </div>
-                  <div className="p-3">
-                    <h3 className="font-semibold text-sm">{title}</h3>
+                  <div className="p-2 sm:p-3">
+                    <h3 className="font-semibold text-xs sm:text-sm">
+                      {title}
+                    </h3>
                   </div>
                 </CardContent>
               </Card>
@@ -307,8 +343,8 @@ export default function HomePage() {
 
         {/* Korean Series */}
         <section>
-          <h2 className="text-2xl font-bold mb-6">Korean Series</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">Korean Series</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {[
               "Toxic",
               "Irregular",
@@ -336,8 +372,10 @@ export default function HomePage() {
                       </div>
                     </div>
                   </div>
-                  <div className="p-3">
-                    <h3 className="font-semibold text-sm">{title}</h3>
+                  <div className="p-2 sm:p-3">
+                    <h3 className="font-semibold text-xs sm:text-sm">
+                      {title}
+                    </h3>
                   </div>
                 </CardContent>
               </Card>
@@ -346,10 +384,12 @@ export default function HomePage() {
         </section>
 
         {/* Bottom Sections */}
-        <section className="grid md:grid-cols-3 gap-8">
+        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
           {/* Movies On Awards */}
           <div>
-            <h2 className="text-xl font-bold mb-4">Movies On Awards</h2>
+            <h2 className="text-lg sm:text-xl font-bold mb-4">
+              Movies On Awards
+            </h2>
             <Card className="bg-card border-border overflow-hidden">
               <CardContent className="p-0">
                 <div className="relative">
@@ -362,20 +402,22 @@ export default function HomePage() {
                   />
                 </div>
                 <div className="p-4">
-                  <h3 className="font-bold text-lg mb-2">Gundala</h3>
+                  <h3 className="font-bold text-base sm:text-lg mb-2">
+                    Gundala
+                  </h3>
                   <div className="flex items-center space-x-1 mb-2">
                     <Star className="w-4 h-4 fill-chart-1 text-chart-1" />
                     <span className="text-sm">8.1</span>
                   </div>
-                  <p className="text-muted-foreground text-sm mb-4">
+                  <p className="text-sm text-muted-foreground mb-4">
                     Indonesia&apos;s preeminent comic book superhero and his
                     alter ego Sancaka enter the cinematic universe to battle the
                     wicked Pengkor and his diabolical squad of orphan assassins.
                   </p>
-                  <div className="flex space-x-2">
+                  <div className="flex flex-wrap gap-2 sm:gap-4">
                     <Button
                       size="sm"
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 text-sm"
                     >
                       <Play className="w-3 h-3 mr-1" />
                       Play Now
@@ -383,7 +425,7 @@ export default function HomePage() {
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-border text-foreground"
+                      className="border-border text-foreground px-4 py-2 text-sm"
                     >
                       <Plus className="w-3 h-3 mr-1" />
                       Add Watchlist
@@ -396,7 +438,7 @@ export default function HomePage() {
 
           {/* Fast */}
           <div>
-            <h2 className="text-xl font-bold mb-4">Fast</h2>
+            <h2 className="text-lg sm:text-xl font-bold mb-4">Fast</h2>
             <div className="space-y-3">
               {["Oppenheimer", "The End Hours", "The Flash", "Scream"].map(
                 (title, i) => (
@@ -423,7 +465,7 @@ export default function HomePage() {
 
           {/* Live */}
           <div>
-            <h2 className="text-xl font-bold mb-4">Live</h2>
+            <h2 className="text-lg sm:text-xl font-bold mb-4">Live</h2>
             <div className="space-y-3">
               {["Sonic 2: The Hedgehog", "Pathan", "Black Adam"].map(
                 (title, i) => (
@@ -451,35 +493,47 @@ export default function HomePage() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-16 py-12 px-6 bg-muted">
+      <footer className="mt-12 sm:mt-16 py-8 sm:py-12 px-4 sm:px-6 bg-muted">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold mb-4">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-4">
               Our platform is trusted by millions & features best updated movies
               all around the world.
             </h2>
-            <div className="flex justify-center space-x-8 text-muted-foreground">
-              <a href="#" className="hover:text-foreground">
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-8 text-muted-foreground">
+              <a
+                href="#"
+                className="text-sm sm:text-base hover:text-foreground"
+              >
                 Home
               </a>
-              <a href="#" className="hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm sm:text-base hover:text-foreground"
+              >
                 Discover
               </a>
-              <a href="#" className="hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm sm:text-base hover:text-foreground"
+              >
                 Influence
               </a>
-              <a href="#" className="hover:text-foreground">
+              <a
+                href="#"
+                className="text-sm sm:text-base hover:text-foreground"
+              >
                 Release
               </a>
             </div>
           </div>
-          <div className="flex justify-center space-x-6 text-muted-foreground">
+          <div className="flex justify-center gap-4 sm:gap-6 text-muted-foreground">
             <div className="w-8 h-8 bg-muted-foreground/50 rounded-full"></div>
             <div className="w-8 h-8 bg-muted-foreground/50 rounded-full"></div>
             <div className="w-8 h-8 bg-muted-foreground/50 rounded-full"></div>
             <div className="w-8 h-8 bg-muted-foreground/50 rounded-full"></div>
           </div>
-          <div className="text-center text-muted-foreground text-sm mt-8">
+          <div className="text-center text-muted-foreground text-sm mt-6 sm:mt-8">
             © 2023
           </div>
         </div>
