@@ -1,6 +1,6 @@
 # My Interview Test Submission 
 
-![Responsive Web Application](https://savannah-informatics-interview.vercel.app)
+![Responsive Web Application](https://savannah-informatics-interview.vercel.app/)
 
 This my interview test submission built with **Next.js** for browsing and discovering movies and TV shows. Powered by the **TMDB API**,  to explore trending, popular, top-rated, and Korean content, with detailed pages for individual movies and TV shows.
 
@@ -57,6 +57,8 @@ This my interview test submission built with **Next.js** for browsing and discov
    git clone https://github.com/savannah-informatics-interview/saintstream.git
    cd saintstream
 2. Install Dependencies:
-    ```pnpm install
+    ```bash
+    pnpm install
 3. Set Up Environment Variables:
-    ```pnpm dev
+    ```bash
+    pnpm dev
