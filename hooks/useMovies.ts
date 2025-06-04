@@ -20,7 +20,6 @@ export const usePopularMovies = (page = 1) => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [page]);
 
