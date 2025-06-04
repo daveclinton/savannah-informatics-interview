@@ -40,8 +40,8 @@ export default function FeaturedSection() {
     );
   }
 
-  const featuredMovie = data?.results[0];
-  const secondaryMovie = data?.results[1];
+  const featuredMovie = data?.results?.[0];
+  const secondaryMovie = data?.results?.[1];
 
   if (!featuredMovie || !secondaryMovie) {
     return (
