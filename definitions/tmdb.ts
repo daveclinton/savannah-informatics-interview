@@ -39,3 +39,24 @@ export interface TVShow {
 }
 export const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 export const TMDB_IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
+
+export interface TMDBSearchResult {
+  id: number;
+  title?: string;
+  name?: string;
+  original_name?: string;
+  poster_path?: string;
+  release_date?: string;
+  first_air_date?: string;
+  media_type?: string;
+  popularity?: number;
+}
+
+export interface SearchResponse {
+  results: TMDBSearchResult[];
+  pagination: {
+    page: number;
+    total_pages: number;
+    total_results: number;
+  };
+}
