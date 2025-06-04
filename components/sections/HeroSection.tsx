@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { useMovies } from "@/hooks/useMovies";
+import { useMovies } from '@/hooks/useMovies';
 import {
   Movie,
   PLACEHOLDER_IMAGE,
   TMDB_IMAGE_BASE_URL,
-} from "@/definitions/tmdb";
-import Image from "next/image";
-import { Play, Bookmark } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
-import Slider from "react-slick";
-import { useRef } from "react";
-import { redirect } from "next/navigation";
+} from '@/definitions/tmdb';
+import Image from 'next/image';
+import { Play, Bookmark } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import Slider from 'react-slick';
+import { useRef } from 'react';
+import { redirect } from 'next/navigation';
 
 const sliderSettings = {
   dots: true,
@@ -36,8 +36,8 @@ const sliderSettings = {
 
 export default function HeroSection() {
   const { data, isLoading, error } = useMovies({
-    type: "trending",
-    timeWindow: "week",
+    type: 'trending',
+    timeWindow: 'week',
     page: 1,
   });
   const sliderRef = useRef<Slider>(null);
@@ -115,7 +115,7 @@ export default function HeroSection() {
                     {movie.title}
                   </h1>
                   <p className="text-sm sm:text-base text-black dark:text-white mb-6 leading-relaxed">
-                    {movie.overview || "No overview available"}
+                    {movie.overview || 'No overview available'}
                   </p>
                   <div className="flex flex-wrap gap-4">
                     <Button
@@ -130,12 +130,14 @@ export default function HeroSection() {
                     <Button
                       variant="outline"
                       onClick={() => {
-                        redirect(`/movies/movie/${movie.id}`);
+                        redirect(
+                          'https://www.figma.com/design/caYGXx5fSx16Xez2xJiZ3V/Saintstream-Movie-Streaming-Website--Community-?node-id=18-2808&p=f&t=o8LgZwqTLb6ZswMa-0'
+                        );
                       }}
                       className="border-border text-foreground bg-transparent rounded-lg px-4 sm:px-6 py-2 sm:py-3 text-sm sm:text-base gap-2"
                     >
                       <Bookmark className="w-4 h-4" />
-                      Add Watchlist
+                      Figma Design
                     </Button>
                   </div>
                 </div>

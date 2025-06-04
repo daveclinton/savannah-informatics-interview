@@ -1,5 +1,0 @@
-pnpm test
-npx lint-staged
-
-# Run type checking
-pnpm type-check

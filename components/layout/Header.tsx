@@ -1,9 +1,9 @@
-"use client";
-import { Search } from "lucide-react";
-import Link from "next/link";
-import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "@/components/ui/button";
-import { useAuthSession } from "@/hooks/useAuthSession";
+'use client';
+import { Search } from 'lucide-react';
+import Link from 'next/link';
+import { ModeToggle } from '@/components/mode-toggle';
+import { Button } from '@/components/ui/button';
+import { useAuthSession } from '@/hooks/useAuthSession';
 
 const Header = () => {
   const { session, logout } = useAuthSession();
