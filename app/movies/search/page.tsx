@@ -3,7 +3,7 @@
 import type React from "react";
 import { useSearch } from "@/hooks/useSearch";
 import { useQueryStates } from "nuqs";
-import { Search, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+
 import Image from "next/image";
 import {
   searchParamsParsers,
@@ -25,6 +26,15 @@ import {
   getMediaTypeIcon,
   getMediaTypeLabel,
 } from "@/definitions/helpers/mediaType";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function SearchPage() {
   const [params, setParams] = useQueryStates(searchParamsParsers, {
@@ -51,6 +61,39 @@ export default function SearchPage() {
       setParams({ page: newPage });
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  };
+
+  const generatePaginationItems = () => {
+    const totalPages = data?.pagination.total_pages || 1;
+    const currentPage = page;
+    const items = [];
+
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) {
+        items.push(i);
+      }
+    } else {
+      items.push(1);
+
+      if (currentPage > 4) {
+        items.push("ellipsis1");
+      }
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = start; i <= end; i++) {
+        items.push(i);
+      }
+
+      if (currentPage < totalPages - 3) {
+        items.push("ellipsis2");
+      }
+      if (totalPages > 1) {
+        items.push(totalPages);
+      }
+    }
+
+    return items;
   };
 
   return (
@@ -249,38 +292,51 @@ export default function SearchPage() {
           </div>
 
           {data.pagination.total_pages > 1 && (
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 py-6">
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="outline"
-                  onClick={() => handlePageChange(page - 1)}
-                  disabled={page === 1}
-                  className="flex items-center gap-1"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                  Previous
-                </Button>
+            <div className="flex flex-col items-center gap-4 py-6">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() => handlePageChange(page - 1)}
+                      className={
+                        page === 1
+                          ? "pointer-events-none opacity-50"
+                          : "cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
 
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">Page</span>
-                  <span className="font-medium">{page}</span>
-                  <span className="text-sm text-muted-foreground">
-                    of {data.pagination.total_pages}
-                  </span>
-                </div>
+                  {generatePaginationItems().map((item, index) => (
+                    <PaginationItem key={index}>
+                      {typeof item === "number" ? (
+                        <PaginationLink
+                          onClick={() => handlePageChange(item)}
+                          isActive={item === page}
+                          className="cursor-pointer"
+                        >
+                          {item}
+                        </PaginationLink>
+                      ) : (
+                        <PaginationEllipsis />
+                      )}
+                    </PaginationItem>
+                  ))}
 
-                <Button
-                  variant="outline"
-                  onClick={() => handlePageChange(page + 1)}
-                  disabled={page === data.pagination.total_pages}
-                  className="flex items-center gap-1"
-                >
-                  Next
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </div>
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={() => handlePageChange(page + 1)}
+                      className={
+                        page === data.pagination.total_pages
+                          ? "pointer-events-none opacity-50"
+                          : "cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
 
-              <div className="text-sm text-muted-foreground mt-2 sm:mt-0">
+              <div className="text-sm text-muted-foreground">
+                Page {page} of {data.pagination.total_pages} •{" "}
                 {data.pagination.total_results.toLocaleString()} results
               </div>
             </div>
