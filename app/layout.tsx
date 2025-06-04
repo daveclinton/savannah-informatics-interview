@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { cookies } from "next/headers";
 import ThemeCookieSync from "@/components/ThemeCookieSync";
+import { TanstackQueryProvider } from "./tanstack-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,21 +28,22 @@ export default async function RootLayout({
 }>) {
   const cookieStore = cookies();
   const theme = (await cookieStore).get("theme")?.value || "light";
-
   return (
     <html lang="en" className={theme} suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme={theme}
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <ThemeCookieSync />
-        </ThemeProvider>
+        <TanstackQueryProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme={theme}
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <ThemeCookieSync />
+          </ThemeProvider>
+        </TanstackQueryProvider>
       </body>
     </html>
   );
