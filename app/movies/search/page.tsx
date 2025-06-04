@@ -52,6 +52,15 @@ export default function SearchPage() {
     if (searchQuery) setParams({ page: 1 });
   };
 
+  const handleReset = () => {
+    setParams({
+      searchQuery: "",
+      mediaType: "multi",
+      page: 1,
+      sortBy: "popularity.desc",
+    });
+  };
+
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= (data?.pagination.total_pages || 1)) {
       setParams({ page: newPage });
@@ -101,89 +110,106 @@ export default function SearchPage() {
         </p>
       </div>
 
-      <Card className="mb-8">
+      <Card className="mb-8 shadow-sm">
         <CardContent className="pt-6">
-          <form
-            onSubmit={handleSearch}
-            className="flex flex-col gap-4 md:flex-row md:items-end"
-          >
-            <div className="flex-1 space-y-2">
-              <label htmlFor="search-query" className="text-sm font-medium">
-                Search Query
-              </label>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  id="search-query"
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setParams({ searchQuery: e.target.value })}
-                  placeholder="Enter movie, TV show, or person name"
-                  className="pl-10"
-                />
+          <form onSubmit={handleSearch} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+              <div className="md:col-span-5 space-y-2">
+                <label htmlFor="search-query" className="text-sm font-medium">
+                  Search Query
+                </label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="search-query"
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setParams({ searchQuery: e.target.value })}
+                    placeholder="Enter movie, TV show, or person name"
+                    className="pl-10 h-11"
+                  />
+                </div>
+              </div>
+
+              <div className="md:col-span-2 space-y-2">
+                <label htmlFor="media-type" className="text-sm font-medium">
+                  Media Type
+                </label>
+                <Select
+                  value={mediaType}
+                  onValueChange={(value) =>
+                    setParams({
+                      mediaType: value as "multi" | "movie" | "tv" | "person",
+                    })
+                  }
+                >
+                  <SelectTrigger id="media-type" className="h-11">
+                    <SelectValue placeholder="Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="multi">All</SelectItem>
+                    <SelectItem value="movie">Movies</SelectItem>
+                    <SelectItem value="tv">TV Shows</SelectItem>
+                    <SelectItem value="person">People</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="md:col-span-3 space-y-2">
+                <label htmlFor="sort-by" className="text-sm font-medium">
+                  Sort By
+                </label>
+                <Select
+                  value={sortBy}
+                  onValueChange={(value) =>
+                    setParams({
+                      sortBy: value as "popularity.desc" | "release_date.desc",
+                    })
+                  }
+                >
+                  <SelectTrigger id="sort-by" className="h-11">
+                    <SelectValue placeholder="Sort By" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="popularity.desc">
+                      Popularity (Desc)
+                    </SelectItem>
+                    <SelectItem value="release_date.desc">
+                      Release Date (Desc)
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="md:col-span-2 flex gap-2">
+                <Button
+                  type="submit"
+                  className="flex-1 h-11"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Searching...
+                    </>
+                  ) : (
+                    <>
+                      <Search className="mr-2 h-4 w-4" />
+                      Search
+                    </>
+                  )}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleReset}
+                  className="h-11 px-3"
+                  title="Reset all filters"
+                >
+                  Reset
+                </Button>
               </div>
             </div>
-
-            <div className="space-y-2 w-full md:w-40">
-              <label htmlFor="media-type" className="text-sm font-medium">
-                Media Type
-              </label>
-              <Select
-                value={mediaType}
-                onValueChange={(value) =>
-                  setParams({
-                    mediaType: value as "multi" | "movie" | "tv" | "person",
-                  })
-                }
-              >
-                <SelectTrigger id="media-type">
-                  <SelectValue placeholder="Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="multi">All</SelectItem>
-                  <SelectItem value="movie">Movies</SelectItem>
-                  <SelectItem value="tv">TV Shows</SelectItem>
-                  <SelectItem value="person">People</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2 w-full md:w-60">
-              <label htmlFor="sort-by" className="text-sm font-medium">
-                Sort By
-              </label>
-              <Select
-                value={sortBy}
-                onValueChange={(value) =>
-                  setParams({
-                    sortBy: value as "popularity.desc" | "release_date.desc",
-                  })
-                }
-              >
-                <SelectTrigger id="sort-by">
-                  <SelectValue placeholder="Sort By" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="popularity.desc">
-                    Popularity (Desc)
-                  </SelectItem>
-                  <SelectItem value="release_date.desc">
-                    Release Date (Desc)
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <Button type="submit" className="md:self-end" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Searching...
-                </>
-              ) : (
-                "Search"
-              )}
-            </Button>
           </form>
         </CardContent>
       </Card>
@@ -216,69 +242,24 @@ export default function SearchPage() {
       )}
 
       {data && data.results.length > 0 && (
-        <>
-          <div className="flex justify-between">
-            <div className="mb-6">
+        <div className="space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b">
+            <div>
               <h2 className="text-2xl font-bold">Search Results</h2>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-muted-foreground mt-1">
                 {data.pagination.total_results.toLocaleString()} results for
-                &quot;
-                {searchQuery}&quot;
+                &quot;{searchQuery}&quot;
               </p>
             </div>
+
             {data.pagination.total_pages > 1 && (
-              <div className="flex flex-col items-center gap-4 py-6">
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious
-                        onClick={() => handlePageChange(page - 1)}
-                        className={
-                          page === 1
-                            ? "pointer-events-none opacity-50"
-                            : "cursor-pointer"
-                        }
-                      />
-                    </PaginationItem>
-
-                    {generatePaginationItems().map((item, index) => (
-                      <PaginationItem key={index}>
-                        {typeof item === "number" ? (
-                          <PaginationLink
-                            onClick={() => handlePageChange(item)}
-                            isActive={item === page}
-                            className="cursor-pointer"
-                          >
-                            {item}
-                          </PaginationLink>
-                        ) : (
-                          <PaginationEllipsis />
-                        )}
-                      </PaginationItem>
-                    ))}
-
-                    <PaginationItem>
-                      <PaginationNext
-                        onClick={() => handlePageChange(page + 1)}
-                        className={
-                          page === data.pagination.total_pages
-                            ? "pointer-events-none opacity-50"
-                            : "cursor-pointer"
-                        }
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-
-                <div className="text-sm text-muted-foreground">
-                  Page {page} of {data.pagination.total_pages} •{" "}
-                  {data.pagination.total_results.toLocaleString()} results
-                </div>
+              <div className="text-sm text-muted-foreground">
+                Page {page} of {data.pagination.total_pages}
               </div>
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {data.results
               .reduce<[any[], any[]]>(
                 (acc, result, index) => {
@@ -290,40 +271,105 @@ export default function SearchPage() {
               .map((column, colIndex) => (
                 <div key={colIndex} className="space-y-4">
                   {column.map((result) => (
-                    <div
+                    <Card
                       key={`${result.media_type}-${result.id}`}
-                      className="flex items-start gap-4 p-2 hover:bg-muted/50 transition-colors rounded-lg cursor-pointer"
+                      className="hover:shadow-md transition-all duration-200 cursor-pointer group"
                     >
-                      <div className="relative w-16 h-16 flex-shrink-0">
-                        <Image
-                          src={`https://image.tmdb.org/t/p/w200/${
-                            result.poster_path || result.profile_path
-                          }`}
-                          alt={result.title || result.name || "Media poster"}
-                          fill
-                          className="object-cover rounded"
-                          sizes="64px"
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-base leading-tight">
-                          {result.title || result.name || result.original_name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {getMediaTypeLabel(result.media_type)} -{" "}
-                          {result.release_date
-                            ? new Date(result.release_date).getFullYear()
-                            : result.first_air_date
-                            ? new Date(result.first_air_date).getFullYear()
-                            : "N/A"}
-                        </p>
-                      </div>
-                    </div>
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-4">
+                          <div className="relative w-16 h-20 flex-shrink-0">
+                            <Image
+                              src={`https://image.tmdb.org/t/p/w200/${
+                                result.poster_path || result.profile_path
+                              }`}
+                              alt={
+                                result.title || result.name || "Media poster"
+                              }
+                              fill
+                              className="object-cover rounded-md"
+                              sizes="64px"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-base leading-tight group-hover:text-primary transition-colors">
+                              {result.title ||
+                                result.name ||
+                                result.original_name}
+                            </h3>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {getMediaTypeLabel(result.media_type)} •{" "}
+                              {result.release_date
+                                ? new Date(result.release_date).getFullYear()
+                                : result.first_air_date
+                                ? new Date(result.first_air_date).getFullYear()
+                                : "N/A"}
+                            </p>
+                            {result.overview && (
+                              <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+                                {result.overview}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   ))}
                 </div>
               ))}
           </div>
-        </>
+
+          {data.pagination.total_pages > 1 && (
+            <div className="flex flex-col items-center gap-4 pt-6 border-t">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() => handlePageChange(page - 1)}
+                      className={
+                        page === 1
+                          ? "pointer-events-none opacity-50"
+                          : "cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
+
+                  {generatePaginationItems().map((item, index) => (
+                    <PaginationItem key={index}>
+                      {typeof item === "number" ? (
+                        <PaginationLink
+                          onClick={() => handlePageChange(item)}
+                          isActive={item === page}
+                          className="cursor-pointer"
+                        >
+                          {item}
+                        </PaginationLink>
+                      ) : (
+                        <PaginationEllipsis />
+                      )}
+                    </PaginationItem>
+                  ))}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={() => handlePageChange(page + 1)}
+                      className={
+                        page === data.pagination.total_pages
+                          ? "pointer-events-none opacity-50"
+                          : "cursor-pointer"
+                      }
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+
+              <div className="text-sm text-muted-foreground">
+                Showing {(page - 1) * 20 + 1}-
+                {Math.min(page * 20, data.pagination.total_results)} of{" "}
+                {data.pagination.total_results.toLocaleString()} results
+              </div>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
