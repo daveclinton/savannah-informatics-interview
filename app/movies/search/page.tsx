@@ -31,7 +31,6 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import { TMDB_IMAGE_BASE_URL } from "@/definitions/tmdb";
 
-// Define parsers for query parameters
 const searchParamsParsers = {
   searchQuery: parseAsString.withDefault(""),
   mediaType: parseAsStringEnum<"multi" | "movie" | "tv" | "person">([
@@ -47,7 +46,6 @@ const searchParamsParsers = {
   ]).withDefault("popularity.desc"),
 };
 
-// Define URL keys for shorter query parameters
 const searchParamsUrlKeys = {
   searchQuery: "q",
   mediaType: "t",
@@ -72,7 +70,7 @@ export default function SearchPage() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery) setParams({ page: 1 }); // Reset page to 1 on new search
+    if (searchQuery) setParams({ page: 1 });
   };
 
   const handlePageChange = (newPage: number) => {
@@ -122,7 +120,7 @@ export default function SearchPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-8 max-w-7xl">
       <div className="mb-8 text-center">
         <h1 className="text-4xl font-bold mb-2">Search TMDB</h1>
         <p className="text-muted-foreground">
@@ -252,11 +250,11 @@ export default function SearchPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
             {data.results.map((result) => (
               <Card
                 key={`${result.media_type}-${result.id}`}
-                className="overflow-hidden flex flex-col h-full hover:shadow-lg transition-shadow"
+                className="overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <div className="relative aspect-[2/3] bg-muted">
                   <Image
@@ -270,10 +268,10 @@ export default function SearchPage() {
                     alt={result.title || result.name || "Media poster"}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
                 </div>
-                <CardContent className="pt-4 flex-1">
+                <CardContent className="p-4">
                   <Badge
                     className={`mb-2 ${getMediaTypeColor(result.media_type)}`}
                   >
@@ -282,31 +280,31 @@ export default function SearchPage() {
                       {getMediaTypeLabel(result.media_type)}
                     </span>
                   </Badge>
-                  <h3 className="font-semibold text-lg line-clamp-2 mb-2">
+                  <h3 className="font-semibold text-base md:text-lg line-clamp-2 mb-2">
                     {result.title || result.name || result.original_name}
                   </h3>
                   {result.release_date && (
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="text-xs md:text-sm text-muted-foreground mb-2">
                       Released: {new Date(result.release_date).getFullYear()}
                     </p>
                   )}
                   {result.first_air_date && (
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="text-xs md:text-sm text-muted-foreground mb-2">
                       First Aired:{" "}
                       {new Date(result.first_air_date).getFullYear()}
                     </p>
                   )}
                   {result.overview && (
-                    <p className="text-sm text-muted-foreground line-clamp-3">
+                    <p className="text-xs md:text-sm text-muted-foreground line-clamp-2 md:line-clamp-3">
                       {result.overview}
                     </p>
                   )}
                 </CardContent>
-                <CardFooter className="pt-0">
+                <CardFooter className="p-4 pt-0">
                   {result.vote_average && result.vote_average > 0 && (
                     <div className="flex items-center gap-2">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <span className="font-medium text-sm">
+                      <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <span className="font-medium text-xs md:text-sm">
                           {Math.round(result.vote_average * 10)}%
                         </span>
                       </div>

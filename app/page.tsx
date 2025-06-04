@@ -1,71 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { Search, Play, Plus, Star, Bookmark } from "lucide-react";
+import { Play, Plus, Star, Bookmark } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ModeToggle } from "@/components/mode-toggle";
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Header - Sticky and responsive */}
-      <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm">
-        <div className="flex items-center justify-between px-4 py-4 sm:px-6 max-w-7xl mx-auto">
-          <div className="flex items-center space-x-4 sm:space-x-8">
-            <div className="flex items-center space-x-2">
-              <span className="text-lg sm:text-xl font-bold">daveclintonn</span>
-            </div>
-            <nav className="hidden md:flex space-x-4 lg:space-x-6">
-              <a
-                href="#"
-                className="text-sm lg:text-base text-foreground hover:text-muted-foreground"
-              >
-                Home
-              </a>
-              <a
-                href="#"
-                className="text-sm lg:text-base text-muted hover:text-foreground"
-              >
-                Discover
-              </a>
-              <a
-                href="#"
-                className="text-sm lg:text-base text-muted hover:text-foreground"
-              >
-                Movie Release
-              </a>
-              <a
-                href="#"
-                className="text-sm lg:text-base text-muted hover:text-foreground"
-              >
-                Forum
-              </a>
-              <a
-                href="#"
-                className="text-sm lg:text-base text-muted hover:text-foreground"
-              >
-                About
-              </a>
-            </nav>
-          </div>
-          <div className="flex items-center space-x-2 sm:space-x-4">
-            <Search className="w-5 h-5 text-foreground" />
-            <Button
-              variant="outline"
-              className="border border-border text-foreground bg-transparent rounded-xl px-4 sm:px-6 py-2 text-sm sm:text-base"
-            >
-              Sign up
-            </Button>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl px-4 sm:px-6 py-2 text-sm sm:text-base">
-              Login
-            </Button>
-            <ModeToggle />
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section - Responsive height and typography */}
       <section className="relative h-[500px] sm:h-[600px] md:h-[700px] -mt-[64px] sm:-mt-[72px] overflow-hidden">
         <Image
           src="https://picsum.photos/1920/800?random=1"

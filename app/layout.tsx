@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import ThemeCookieSync from "@/components/ThemeCookieSync";
 import { TanstackQueryProvider } from "./tanstack-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
+import Header from "@/components/layout/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,7 +42,10 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <NuqsAdapter> {children}</NuqsAdapter>
+            <NuqsAdapter>
+              <Header />
+              {children}
+            </NuqsAdapter>
             <ThemeCookieSync />
           </ThemeProvider>
         </TanstackQueryProvider>
