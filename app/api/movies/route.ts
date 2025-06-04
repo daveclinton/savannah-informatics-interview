@@ -22,15 +22,19 @@ export async function GET(request: NextRequest) {
       case "popular":
         endpoint = "/movie/popular";
         break;
+      case "now_playing":
+        endpoint = "/movie/now_playing";
+        break;
       default:
         return NextResponse.json(
           {
             error:
-              "Invalid type parameter. Use 'trending', 'top_rated', or 'popular'.",
+              "Invalid type parameter. Use 'trending', 'top_rated', 'popular', or 'now_playing'.",
           },
           { status: 400 }
         );
     }
+
     const data = await tmdbFetch(endpoint, params);
 
     return NextResponse.json(data);

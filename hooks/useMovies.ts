@@ -1,8 +1,8 @@
-import { TMDBResponse, Movie } from "@/definitions/tmdb";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
+import { TMDBResponse, Movie } from "@/definitions/tmdb";
 
-type MovieType = "trending" | "top_rated" | "popular";
+type MovieType = "trending" | "top_rated" | "popular" | "now_playing";
 
 interface MovieQueryParams {
   type: MovieType;
@@ -20,7 +20,7 @@ const fetchMovies = async ({
       params: {
         type,
         page,
-        ...(type === "trending" && { time_window: timeWindow }), // Conditionally include time_window
+        ...(type === "trending" && { time_window: timeWindow }),
       },
     });
     return response.data;
