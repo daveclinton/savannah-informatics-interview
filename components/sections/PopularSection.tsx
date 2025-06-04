@@ -2,8 +2,7 @@
 
 import { useMovies } from "@/hooks/useMovies";
 import { Movie } from "@/definitions/tmdb";
-import MovieCard from "@/components/MovieCard"; // Adjust path to your MovieCard component
-
+import MovieCard from "../layout/MovieCard";
 export default function PopularSection() {
   const { data, isLoading, error } = useMovies({
     type: "trending",
