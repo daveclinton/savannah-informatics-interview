@@ -14,11 +14,11 @@ export default function HomePage() {
       <HeroSection />
       <BrandLogos />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-12">
-        <MovieSection title="Top Rated Movies" type="top_rated" />
+        <MovieSection title="Just Release" type="top_rated" />
         <PopularSection />
-        <MovieSection title="Popular Movies" type="popular" />
         <FeaturedSection />
-        <SeriesSection />
+        <MovieSection title="Movies" type="popular" />
+        <SeriesSection title="Series" type="popular" limit={6} />
         <KoreanSeriesSection />
         <BottomSections />
       </div>
