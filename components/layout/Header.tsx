@@ -1,8 +1,8 @@
 "use client";
 import { Search } from "lucide-react";
 import Link from "next/link";
-import { ModeToggle } from "../mode-toggle";
-import { Button } from "../ui/button";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Button } from "@/components/ui/button";
 import { useAuthSession } from "@/hooks/useAuthSession";
 
 const Header = () => {
@@ -34,7 +34,7 @@ const Header = () => {
             variant="link"
             className="text-foreground hover:text-natgeo-yellow focus:ring-2 focus:ring-offset-2 focus:ring-ring cursor-pointer transition-transform duration-200 hover:scale-105"
           >
-            <Link href="/movies/search">
+            <Link data-testid="lucide-search" href="/movies/search">
               <Search className="w-5 h-5 cursor-pointer" />
               <span className="sr-only">Search</span>
             </Link>
