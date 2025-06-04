@@ -1,39 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Interview Test Submission 
 
-## Getting Started
+![Responsive Web Application](https://savannah-informatics-interview.vercel.app)
 
-First, run the development server:
+This my interview test submission built with **Next.js** for browsing and discovering movies and TV shows. Powered by the **TMDB API**,  to explore trending, popular, top-rated, and Korean content, with detailed pages for individual movies and TV shows.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🏠 Dynamic Home Page
+- Shows categorized movies and shows
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 🎬 Movie & TV Show Listings Search Page
+- A search page that uses url state to search anf filter movies and tv shows.
+- This is a protected page to achieve the authentication feature
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📺 Details Page
+- Unified dynamic route (`/details/[type]/[id]`) for movie and TV show details
 
-## Learn More
+### ⚡ Performance & UX
+- Skeleton loaders for all sections during data fetching
+- Infinite looping carousels with autoplay and responsive breakpoints
 
-To learn more about Next.js, take a look at the following resources:
+### 🔌 API Integration
+- Fetches data from TMDB via custom **Next.js API routes** (`/api/movies`, `/api/tv`, `/api/details`)
+- **Caching** with React Query for optimized performance
+- **URL state management** using Nuqs adapter
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🔐 Authentication
+- **Supabase Auth** configured for user authentication
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🧪 Testing
+- **Unit tests** for components using **Cypress**
 
-## Deploy on Vercel
+## 🛠️ Technologies
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Framework**: Next.js 14 (App Router)
+- **Frontend**: React, TypeScript (with `strict` mode), Tailwind CSS, Shadcn UI
+- **Data Fetching**: React Query, Axios
+- **Carousels**: react-slick
+- **Authentication**: Supabase
+- **Icons**: Lucide React
+- **Testing**: Cypress
+- **URL State**: Nuqs adapter
+- **Build Tool**: npm
+- **Environment**: Node.js 18+
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📋 Prerequisites
 
-<!-- Figma Design
-https://www.figma.com/design/caYGXx5fSx16Xez2xJiZ3V/Saintstream-Movie-Streaming-Website--Community-?node-id=18-2808&p=f&t=3scLjnXCqC9u6ByX-0 -->
+- Node.js: v18 or higher
+- pnpm
+- TMDB API Key: [Obtain from TMDB](https://www.themoviedb.org/settings/api)
+
+## 🚀 Setup
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/savannah-informatics-interview/saintstream.git
+   cd saintstream
+2. Install Dependencies:
+    ```pnpm install
+3. Set Up Environment Variables:
+    ```pnpm dev
