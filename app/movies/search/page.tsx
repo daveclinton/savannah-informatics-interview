@@ -29,7 +29,6 @@ import {
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { TMDB_IMAGE_BASE_URL } from "@/definitions/tmdb";
 
 const searchParamsParsers = {
   searchQuery: parseAsString.withDefault(""),
@@ -258,13 +257,9 @@ export default function SearchPage() {
               >
                 <div className="relative aspect-[2/3] bg-muted">
                   <Image
-                    src={
+                    src={`https://image.tmdb.org/t/p/w300/${
                       result.poster_path || result.profile_path
-                        ? `${TMDB_IMAGE_BASE_URL}/w500${
-                            result.poster_path || result.profile_path
-                          }`
-                        : "https://placehold.co/450x350"
-                    }
+                    }`}
                     alt={result.title || result.name || "Media poster"}
                     fill
                     className="object-cover"

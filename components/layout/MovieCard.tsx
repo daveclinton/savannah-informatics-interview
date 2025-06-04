@@ -1,15 +1,11 @@
 "use client";
 
-import { Movie, TVShow } from "@/definitions/tmdb";
+import { Movie, PLACEHOLDER_IMAGE, TVShow } from "@/definitions/tmdb";
 import { cn } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-// Base64 placeholder image
-const PLACEHOLDER_IMAGE =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAGlJREFUeF7t1QENAAAIgOD/tH/7mQAJJAZF1W4AAIAOAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAgP4B3R/0+wIAX7zG+wAAAABJRU5ErkJggg==";
 
 type Props = {
   item: Movie | TVShow;
@@ -17,12 +13,12 @@ type Props = {
 };
 
 const MovieCard = ({ item, className }: Props) => {
-  // Type guard to determine if item is Movie or TVShow
   const isMovie = (item: Movie | TVShow): item is Movie => "title" in item;
-
   const title = isMovie(item) ? item.title : item.name;
   const date = isMovie(item) ? item.release_date : item.first_air_date;
-  const link = isMovie(item) ? `/movies/${item.id}` : `/tv/${item.id}`;
+  const link = isMovie(item)
+    ? `/movies/movie/${item.id}`
+    : `movies/tv/${item.id}`;
 
   return (
     <Link

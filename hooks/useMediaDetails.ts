@@ -2,11 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { Movie, TVShow } from "@/definitions/tmdb";
 
-type MediaType = "movie" | "tv";
 type MediaDetails = Movie | TVShow;
 
 interface MediaQueryParams {
-  type: MediaType;
+  type: string;
   id: string;
 }
 

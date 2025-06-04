@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import React from "react";
 
-const loading = () => {
+const SkeltonLoader = () => {
   return (
     <section className="py-8 px-4 sm:px-6 max-w-7xl mx-auto">
       <div className="relative h-[300px] sm:h-[400px] md:h-[500px] rounded-lg overflow-hidden mb-6">
@@ -23,4 +23,4 @@ const loading = () => {
   );
 };
 
-export default loading;
+export default SkeltonLoader;
