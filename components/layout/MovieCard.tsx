@@ -1,21 +1,32 @@
 "use client";
 
-import { Movie } from "@/definitions/tmdb";
+import { Movie, TVShow } from "@/definitions/tmdb";
 import { cn } from "@/lib/utils";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
+// Base64 placeholder image
+const PLACEHOLDER_IMAGE =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAGlJREFUeF7t1QENAAAIgOD/tH/7mQAJJAZF1W4AAIAOAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAACAAAgP4B3R/0+wIAX7zG+wAAAABJRU5ErkJggg==";
+
 type Props = {
-  movie: Movie;
+  item: Movie | TVShow;
   className?: string;
 };
 
-const MovieCard = ({ movie, className }: Props) => {
+const MovieCard = ({ item, className }: Props) => {
+  // Type guard to determine if item is Movie or TVShow
+  const isMovie = (item: Movie | TVShow): item is Movie => "title" in item;
+
+  const title = isMovie(item) ? item.title : item.name;
+  const date = isMovie(item) ? item.release_date : item.first_air_date;
+  const link = isMovie(item) ? `/movies/${item.id}` : `/tv/${item.id}`;
+
   return (
     <Link
-      href={`/movies/${movie.id}`}
+      href={link}
       className="inline-block whitespace-normal"
       prefetch={false}
     >
@@ -27,29 +38,33 @@ const MovieCard = ({ movie, className }: Props) => {
       >
         <div className="absolute inset-0 w-full h-full object-cover group-hover:brightness-50 transition-all duration-300">
           <Image
-            src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`}
-            alt={movie.title}
-            width={600}
-            height={300}
-            className="w-full rounded-lg object-cover aspect-[2/1]"
+            src={
+              item.poster_path
+                ? `https://image.tmdb.org/t/p/w300/${item.poster_path}`
+                : PLACEHOLDER_IMAGE
+            }
+            alt={title}
+            width={300}
+            height={450}
+            className="w-full rounded-lg object-cover aspect-[3/4]"
           />
         </div>
 
         <p className="absolute px-1.5 py-0.5 top-1 left-1 bg-card/90 border rounded text-xs flex items-center gap-1 text-primary">
-          <StarIcon className="size-3 md:size-3.5" />{" "}
-          <span>{movie.vote_average.toFixed(1)}</span>
+          <StarIcon className="size-3 md:size-3.5" />
+          <span>{item.vote_average.toFixed(1)}</span>
         </p>
 
-        <div className=" h-full z-10 relative flex items-end">
+        <div className="h-full z-10 relative flex items-end">
           <div className="p-2 pt-12 bg-gradient-to-b from-black/0 via-black/80 to-black w-full">
             <h3 className="text-xs md:text-sm font-semibold text-ellipsis line-clamp-1 overflow-hidden group-hover:text-primary transition-all">
-              {movie.title}
+              {title}
             </h3>
-            <p className="text-[10px] md:text-xs text-foreground/80 h-0 overflow-hidden group-hover:h-[8lh] line-clamp-[8] transition-all">
-              {movie.overview}
+            <p className="text-[10px] md:text-xs text-white dark:text-foreground/80 h-0 overflow-hidden group-hover:h-[8lh] line-clamp-[8] transition-all">
+              {item.overview || "No overview available"}
             </p>
             <p className="text-[10px] md:text-xs text-muted-foreground group-hover:h-0 overflow-hidden transition-all">
-              {movie.release_date} | {movie.original_language}{" "}
+              {date} | {item.original_language.toUpperCase()}
             </p>
           </div>
         </div>
